@@ -28,7 +28,7 @@ Query used:
 
 ## Step 2: List all projects
 
-Use the `HubId` from step 1 to list all projects and take note of the projectId (`id`). [See NodeJs code](/services/aps/dx.js). 
+Use the `HubId` from step 1 to list all projects and take note of the projectId (`id`). [See NodeJs code](https://github.com/autodesk-platform-services/aps-dx-samples-nodejs/blob/main/services/aps/dx.js). 
 
 ![Step 2](./images/projects.png)
 
@@ -47,7 +47,7 @@ Query used:
 
 ## Step 3: List Project Folders
 
-This step uses `hubId` and `projectId`. Click on List Project Folders. [See NodeJs code](/services/aps/dx.js). 
+This step uses `hubId` and `projectId`. Click on List Project Folders. [See NodeJs code](https://github.com/autodesk-platform-services/aps-dx-samples-nodejs/blob/main/services/aps/dx.js). 
 
 ![Step 3](./images/projectFolders.png)
 
@@ -84,7 +84,7 @@ but also the sub-folders.
 
 ## Step 4: List Folder Content
 
-This step uses `hubId`, `projectId` and the `folderId`. Click on List Folders Content. [See NodeJs code](/services/aps/dx.js).
+This step uses `hubId`, `projectId` and the `folderId`. Click on List Folders Content. [See NodeJs code](https://github.com/autodesk-platform-services/aps-dx-samples-nodejs/blob/main/services/aps/dx.js).
 
 ***Note:*** In case there are sub-folders needed to be explored, 
 put the sub-folder urn into same filed and rerun again this step  
@@ -115,7 +115,7 @@ Query used:
 
 ## Step 5: Get Exchange information
 
-This step uses only the `exchangeFileUrn` received from the previous results. Click on Get Exchange Information. [See NodeJs code](/services/aps/dx.js).
+This step uses only the `exchangeFileUrn` received from the previous results. Click on Get Exchange Information. [See NodeJs code](https://github.com/autodesk-platform-services/aps-dx-samples-nodejs/blob/main/services/aps/dx.js).
 
 ![Step 5](./images/exchangeInfo.png)
 

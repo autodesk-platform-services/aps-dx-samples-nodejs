@@ -5,7 +5,7 @@
 [![npm](https://img.shields.io/badge/npm-8.11-blue.svg)](https://www.npmjs.com/)
 [![license](https://img.shields.io/:license-mit-green.svg)](https://opensource.org/licenses/MIT)
 
-## Setup
+## Description
 
 This sample demonstrates some basic GraphQL queries for Data Exchange, implementing following workflows:
 
@@ -14,7 +14,7 @@ This sample demonstrates some basic GraphQL queries for Data Exchange, implement
 
 ![Sample](./thumbnail.png)
 
-## Development
+## Setup
 
 ### Prerequisites
 
