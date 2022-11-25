@@ -5,13 +5,12 @@
 [![npm](https://img.shields.io/badge/npm-8.11-blue.svg)](https://www.npmjs.com/)
 [![license](https://img.shields.io/:license-mit-green.svg)](https://opensource.org/licenses/MIT)
 
-## Description
+## Setup
 
 This sample demonstrates some basic GraphQL queries for Data Exchange, implementing following workflows:
 
-- [Design Validation](./DesignValidation.md)
-- [Quantity takeoff](./QuantityTakeOff.md)
-- [Schedule](./Schedule.md)
+- [Get exchange item information](./ExchangeItemInfo.md)
+- [Explore data using filters](./QuantityTakeOff.md)
 
 ![Sample](./thumbnail.png)
 
@@ -30,7 +29,7 @@ or [macOS Terminal](https://support.apple.com/guide/terminal/welcome/mac))
 Clone this project or download it. It's recommended to install GitHub desktop. 
 To clone it via command line, use the following (Terminal on MacOSX/Linux, Git Shell on Windows):
 
-	git clone https://github.com/autodesk-platform-services/aps-dx-samples-nodejs.git
+    git clone https://github.com/autodesk-platform-services/aps-dx-samples-nodejs.git
 
 Specify the following environment variables:
 
