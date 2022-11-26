@@ -1,9 +1,8 @@
-## Retrieving the Exchange Item info
+## Explore Data with filters
 
-Before exploring the exchanged data, it is required to get the exchange id, which can be retrieved
-from the exchange item located in ACC. <br/>
-This code sample focuses on the part of the Data Exchange GraphQL API, needed to navigate through hubs, projects,
-folders and identifying the exchange item.
+Having the id of the exchange file, Data Exchange GraphQL API allows getting the exchanged data through properties of the ***design entities***.
+To limit the amount of information only to needed data, it [supports different filters](https://forge.autodesk.com/en/docs/fdxgraph/v1/reference/inputs/designentityfilterinput/).
+This code sample focuses on filtering by Name, Category.
 
 To run the sample, please review [setup](./README.md#SETUP) instructions.
 

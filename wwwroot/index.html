@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="https://cdn.autodesk.io/favicon.ico">
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/main.css">
+    <title> Data Exchange GraphQL (BETA) - Autodesk Platform Services</title>
+</head>
+
+<body>
+    <div id="header">
+        <img class="logo" src="https://cdn.autodesk.io/logo/black/stacked.png" alt="Autodesk Platform Services">
+        <span class="title">Data Exchange Explorer Samples</span>
+    </div>
+    <div id="sidebar">
+
+    </div>
+    <div id="preview">
+        <div>
+            <h5>Get exchange item information Sample Workflow</h5>
+            Before exploring the exchanged data, it is required to get the exchange id, which can be retrieved
+            from the exchange item located in ACC. <br/>
+            This workflow focuses on the part of the Data Exchange GraphQL API, needed to navigate through hubs, projects,
+            folders and identifying the exchange item.<br /><br/>
+            <a class="btn btn-primary" href="/1-DesignValidation">Go to sample</a>
+        </div>
+        <hr />
+        <div>
+            <h5>Quantity takeoff for Doors Sample Workflow</h5>
+            Let's take the sample model and imagine that you would like to build a quantity takeoff for
+            'Doors'. You will need to get all design entities filtered by classification 'Doors'. <br />
+            <a class="btn btn-primary" href="/2-QuantityTakeOff">Go to sample</a>
+        </div>
+        <hr />
+        <div>
+            <h5>Window Schedule Sample Workflow</h5>
+            A schedule is typically used to identify, in most cases a chart or table providing descriptions of the
+            windows , doors, finishes, lintels, footings, piers, etc. on a construction project. Let's take the same
+            sample model and imagine that you would like to build a window schedule. You will need to retrieve
+            properties like panel glazing, glass, frame material, height, width, etc. of all design entity instances of
+            category windows.<br />
+            <a class="btn btn-primary" href="/3-Schedule">Go to sample</a>
+        </div>
+        <hr />
+    </div>
+</body>
+
+</html>
