@@ -12,7 +12,8 @@ This sample demonstrates some basic GraphQL queries for Data Exchange, implement
 - [Get exchange item information](./ExchangeItemInfo.md)
 - [Quantity takeoff](./QuantityTakeOff.md)
 - [Schedule](./Schedule.md)
-- [Explore data using filters](./ExploreDataWithFilters.md)
+
+[//]: # (- [Explore data using filters]&#40;./ExploreDataWithFilters.md&#41;)
 
 ![Sample](./thumbnail.png)
 
