@@ -13,8 +13,6 @@ This sample demonstrates some basic GraphQL queries for Data Exchange, implement
 - [Quantity takeoff](./QuantityTakeOff.md)
 - [Schedule](./Schedule.md)
 
-[//]: # (- [Explore data using filters]&#40;./ExploreDataWithFilters.md&#41;)
-
 ![Sample](./thumbnail.png)
 
 ## Setup
