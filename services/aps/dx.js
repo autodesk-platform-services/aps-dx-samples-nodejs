@@ -196,7 +196,7 @@ async function getVolumeDataByCategory(exchangeId, category, token) {
           results {
             id
             name
-            properties(filter: {names: ["Volume"]}) {
+            properties(filter: {names: ["Volume", "category"]}) {
               results {
                 name
                 value
