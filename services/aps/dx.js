@@ -60,6 +60,21 @@ async function getFolders(hubId, projectId, token) {
             id
             name
             __typename
+    
+            folders {
+                results {
+                    id
+                    name
+                    __typename
+                }
+            }
+            exchanges {
+                results {
+                    id
+                    name
+                    __typename
+                }
+            }
           }
         }
       }
@@ -85,6 +100,10 @@ async function getFolderContent(hubId, projectId, folderId, token) {
           results {
             id
             name
+            alternativeRepresentations {
+              fileUrn
+              fileVersionUrn
+            }
             __typename
           }
         }
@@ -99,7 +118,7 @@ async function getFolderContent(hubId, projectId, folderId, token) {
 async function getExchangeInfo(exchangeFileUrn, token) {
     const query = `
     {
-      exchangeByFileId(exchangeFileId: "${exchangeFileUrn}") {
+      exchangeByFileId(exchangeFileId: "exchangeFileUrn") {
         id
         name
         version {
@@ -110,16 +129,11 @@ async function getExchangeInfo(exchangeFileUrn, token) {
             results {
               id
               versionNumber
+              createdOn
             }
           }
           tipVersion {
             versionNumber
-          }
-        }
-        propertyDefinitions {
-          results {
-            name
-            id
           }
         }
         properties {
@@ -145,16 +159,22 @@ async function getDataByCategory(exchangeId, category, token) {
           versionNumber
         }
         elements(filter: {query: "property.name.category=='${category}'"}) {
-            results {
-                id
+          results {
+            id
+            name
+            properties {
+              results {
                 name
-                properties {
-                    results {
-                        name
-                        value
-                    }
+                value
+                propertyDefinition {
+                  description
+                  specification
+                  valueType
+                  units
                 }
+              }
             }
+          }
         }
       }
     }
@@ -180,6 +200,13 @@ async function getVolumeDataByCategory(exchangeId, category, token) {
               results {
                 name
                 value
+                propertyDefinition {
+                  description
+                  specification
+                  id
+                  units
+                  valueType
+                }
               }
             }
           }
