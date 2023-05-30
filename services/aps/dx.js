@@ -114,11 +114,48 @@ async function getFolderContent(hubId, projectId, folderId, token) {
     return APS_GraphQL(token, query);
 }
 
+async function getExchangeInfoById(exchangeId, token) {
+
+  const query = `
+  {
+    exchange(exchangeId: "${exchangeId}") {
+      id
+      name
+      version {
+        versionNumber
+      }
+      alternativeRepresentations {
+        fileUrn
+        fileVersionUrn
+      }
+      lineage {
+        versions {
+          results {
+            id
+            versionNumber
+            createdOn
+          }
+        }
+        tipVersion {
+          versionNumber
+        }
+      }
+      properties {
+        results {
+          name
+          value
+        }
+      }
+    }
+  }  
+  `;
+  return APS_GraphQL(token, query);
+}
 
 async function getExchangeInfo(exchangeFileUrn, token) {
     const query = `
     {
-      exchangeByFileId(exchangeFileId: "exchangeFileUrn") {
+      exchangeByFileId(exchangeFileId: "${exchangeFileUrn}") {
         id
         name
         version {
@@ -223,6 +260,7 @@ module.exports = {
     getProjects,
     getFolders,
     getFolderContent,
+    getExchangeInfoById,
     getExchangeInfo,
     getDataByCategory,
     getVolumeDataByCategory

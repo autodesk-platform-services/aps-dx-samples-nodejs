@@ -19,35 +19,28 @@ Use the `HubId` from step 1 to list all projects and take note of the projectId 
 
 ## Step 3: List Project Folders
 
-This step uses `hubId` and `projectId`. Click on List Project Folders. [See NodeJs code](/services/aps/dx.js).
+This step uses `projectId`. Click on List Project Folders. [See NodeJs code](/services/aps/dx.js).
 
 ![Step 3](./images/projectFolders.png)
 
-***Note:*** In this request we show not only the main folders like *Project Files* and *For the Field*,
-but also the sub-folders.
-
-
 ## Step 4: List Folder Content
 
-This step uses `hubId`, `projectId` and the `folderId`. Click on List Folders Content. [See NodeJs code](/services/aps/dx.js).
-
-***Note:*** In case there are sub-folders needed to be explored,
-put the sub-folder urn into same filed and rerun again this step
+This step uses `folderId`. Click on List Folders Content. [See NodeJs code](/services/aps/dx.js).
 
 ![Step 4](./images/folderContent.png)
 
-***Note:*** For the next step, we are interested in items of type `"items:autodesk.bim360:FDX"`.
+***Note:*** For the next step, we are interested only in exchangeId.
 
 
 ## Step 5: Get Exchange information
 
-This step uses only the `exchangeFileUrn` received from the previous results. Click on Get Exchange Information. [See NodeJs code](/services/aps/dx.js).
+This step uses only the `exchangeId` either from the previous results or from step3. Click on Get Exchange Information. [See NodeJs code](/services/aps/dx.js).
 
 ![Step 5](./images/exchangeInfo2.png)
 
 ## Step 6: Generate quantity takeoff
 
-Use the `exchangeId` from step 5. Click on generate schedule. You may adjust he `Category` field. [See NodeJs code](/services/aps/dx.js) 
+Use the `exchangeId`. Click on generate schedule. You may adjust the `Category` field wrapped under single quote. [See NodeJs code](/services/aps/dx.js) 
 
 ![Step 6](./images/schedule.png)
 
@@ -55,32 +48,32 @@ Query used:
 
 ```
 {
-    designEntities(
-            filter: {
-                exchangeId: "${exchangeId}", 
-                classificationFilter: {category: "${category}"}}
-            ) {
-               results {
-                 id
-                 name
-                 classification {
-                   category
-                 }
-                  properties (filter: {name:"Volume" }){
-                    results {
-                        name
-                        displayValue
-                        value
-                        propertyDefinition {
-                           description
-                           specification
-                           type
-                           units
-                        }
-                    }
-                  }
-               }
+      exchange(exchangeId: "${exchangeId}") {
+        id
+        name
+        version {
+          versionNumber
+        }
+        elements(filter: {query: "property.name.category=='${category}'"}) {
+          results {
+            id
+            name
+            properties(filter: {names: ["Volume", "category"]}) {
+              results {
+                name
+                value
+                propertyDefinition {
+                  description
+                  specification
+                  id
+                  units
+                  valueType
+                }
+              }
             }
- }
+          }
+        }
+      }
+    }
 ```
-***Note:*** For now, the only filter available is [the name of the property](https://forge.autodesk.com/en/docs/fdxgraph/v1/reference/inputs/propertyfilterinput/), as in above query is the "Volume".
+***Note:*** In property filter, it takes a list of filter that are only in the response.

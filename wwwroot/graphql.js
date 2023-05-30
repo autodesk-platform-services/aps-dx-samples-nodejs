@@ -25,23 +25,28 @@ registerOnClick('getDesigns', async () => {
 
 // Sample 1 Design validation
 registerOnClick('getFolders', async () => {
-    let hubid = document.getElementById('hubId').value;
+
     let projectId = document.getElementById('projectId').value;
-    if (hubid === '') { writeResponse('Please provide the HubId'); return; }
     if (projectId === '') { writeResponse('Please provide the ProjectId'); return; }
-    let properties = await query('/api/graphql/hubs/' + hubid + '/projects/' + projectId + '/folders');
+    let properties = await query('/api/graphql/hubs/' + " " + '/projects/' + projectId + '/folders');
     writeResponse(properties)
 });
 
 registerOnClick('getFolderContent', async () => {
-    let hubid = document.getElementById('hubId').value;
-    let projectId = document.getElementById('projectId').value;
     let folderId = document.getElementById('folderId').value;
-    if (hubid === '') { writeResponse('Please provide the HubId'); return; }
-    if (projectId === '') { writeResponse('Please provide the ProjectId'); return; }
     if (folderId === '') { writeResponse('Please provide the Folder urn'); return; }
-    let folderContent = await query('/api/graphql/hubs/' + hubid + '/projects/' + projectId + '/folders/' + folderId);
+    let folderContent = await query('/api/graphql/hubs/' + " " + '/projects/' + " " + '/folders/' + folderId);
     writeResponse(folderContent)
+});
+
+registerOnClick('getExchangebyExchangeId', async () => {
+    let exchangeId = document.getElementById('exchangeIdInfo').value;
+    if (exchangeId == '') { 
+        writeResponse("Please provide the exchange Id");
+        return;
+    }
+    let exchangeInfo = await query('/api/graphql/exchange/id/' + exchangeId);
+    writeResponse(exchangeInfo)
 });
 
 registerOnClick('getExchangeInfo', async () => {

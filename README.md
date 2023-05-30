@@ -13,7 +13,7 @@ This sample demonstrates some basic GraphQL queries for Data Exchange, implement
 - [Quantity takeoff](./QuantityTakeOff.md)
 - [Schedule](./Schedule.md)
 
-![thumbnail](./thumbnail.png)
+![thumbnail](./images/exchangeInfo1.png)
 
 ## Setup
 
@@ -61,4 +61,5 @@ Please see the [LICENSE](LICENSE) file for more details.
 
 ## Written by
 
-Denis Grigor, Developer Advocate
+- Denis Grigor, Developer Advocate
+- Suraj Kumar, Software Developer 
