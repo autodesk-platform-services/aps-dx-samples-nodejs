@@ -42,7 +42,7 @@ This step uses only the `exchangeId` received from the previous results. Click o
 
 ## Step 6: Generate quantity takeoff
 
-Use the `exchangeId` and click on generate quantity takeoff. You may adjust the `Category` field encapsulated within single quote. [See NodeJs code](/services/aps/dx.js).
+Use the `exchangeId` and click on generate quantity takeoff. You may adjust the `Category` field. [See NodeJs code](/services/aps/dx.js).
 
 ![Step 6](./images/takeoff.png)
 
