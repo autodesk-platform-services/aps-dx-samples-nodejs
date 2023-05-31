@@ -34,7 +34,7 @@ This step uses `folderId`. Click on List Folders Content. [See NodeJs code](/ser
 
 ## Step 5: Get Exchange information
 
-This step uses only the `exchangeId` either from the previous results or from step3. Click on Get Exchange Information. [See NodeJs code](/services/aps/dx.js).
+This step uses only the `exchangeId` from the previous step. Click on Get Exchange Information. [See NodeJs code](/services/aps/dx.js).
 
 ![Step 5](./images/exchangeInfo2.png)
 
