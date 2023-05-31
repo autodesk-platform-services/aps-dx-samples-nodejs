@@ -40,7 +40,7 @@ This step uses only the `exchangeId` from the previous step. Click on Get Exchan
 
 ## Step 6: Generate quantity takeoff
 
-Use the `exchangeId`. Click on generate schedule. You may adjust the `Category` field wrapped under single quote. [See NodeJs code](/services/aps/dx.js) 
+Use the `exchangeId`. Click on generate schedule. You may adjust the `Category` field. [See NodeJs code](/services/aps/dx.js) 
 
 ![Step 6](./images/schedule.png)
 
