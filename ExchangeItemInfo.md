@@ -1,9 +1,6 @@
 ## Retrieving the Exchange Item info
 
-Before exploring the exchanged data, it is required to get the exchange id, which can be retrieved
-from the exchange item located in ACC. <br/>
-This code sample focuses on the part of the Data Exchange GraphQL API, needed to navigate through hubs, projects,
-folders and identifying the exchange item.
+In order to explore the data of a Data Exchange, it is necessary to obtain the exchange ID, which can be retrieved from the exchange item located in ACC. The following code sample focuses on the specific part of the Data Exchange GraphQL API that is needed to navigate through hubs, projects, and folders, and identify the exchange item:
 
 To run the sample, please review [setup](./README.md#SETUP) instructions.
 
@@ -28,7 +25,7 @@ Query used:
 
 ## Step 2: List all projects
 
-Use the `HubId` from step 1 to list all projects and take note of the projectId (`id`). [See NodeJs code](/services/aps/dx.js).
+Use the `hubId` from Step 1 and click `List Projects` to list all the projects within a Hub. Take note of the Project ID (`id`) for subsequent steps [See NodeJs code](/services/aps/dx.js).
 
 ![Step 2](./images/projects.png)
 
@@ -47,7 +44,7 @@ Query used:
 
 ## Step 3: List Project Folders
 
-This step uses `projectId`. Click on List Project Folders. [See NodeJs code](/services/aps/dx.js).
+Use the `projectId` from Step 2 and click `List Project Folders` to list all the folders in a Project. Take note of the Folder ID (`id`) for subsequent steps [See NodeJs code](/services/aps/dx.js).
 
 ![Step 3](./images/projectFolders.png)
 
@@ -89,7 +86,7 @@ Query used:
 
 ## Step 4: List Folder Content
 
-This step uses `folderId`. Click on List Folders Content. [See NodeJs code](/services/aps/dx.js).
+Use the `folderId` from Step 3 and click `List Folder Content` to list a folder and exchanges within a Project. Take note of the Exchange ID (`id`) for subsequent steps [See NodeJs code](/services/aps/dx.js).
 
 ***Note:*** This query returns the folders and exchanges within the folder.
 
@@ -126,7 +123,7 @@ Query used:
 
 ## Step 5a: Get Exchange information
 
-This step uses only the `exchangeId` received from the previous results. Click on Get Exchange Information. [See NodeJs code](/services/aps/dx.js).
+Use the `exchangeId` from Step 4 and click `Get Exchange Information` to list the properties of a Data Exchange [See NodeJs code](/services/aps/dx.js).
 
 ![Step 5a](./images/exchangeInfo.png)
 
@@ -167,7 +164,7 @@ Query used:
 ``` 
 
 ## Step 5b: Get Exchange information by exchangeFileUrn
-Exchange Information can also be retrived by using `exchangeByFile` query.
+Alternatively, use the exchange `fileUrn` from Step 4 and click `Get Exchange Information` to list the properties of a Data Exchange
 
 ![Step 5a](./images/exchangeInfo.png)
 
