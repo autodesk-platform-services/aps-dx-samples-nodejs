@@ -6,48 +6,41 @@ To run the sample, please review [setup](./README.md#SETUP) instructions.
 
 ## Step 1: List all hubs
 
-After login (top-right), click on `List Hubs` and take note of the hubId (`id`). [See NodeJs code](/services/aps/dx.js).
+After login (top-right), click on `List Hubs` and take note of the hubId (`id`) [See NodeJs code](/services/aps/dx.js).
 
 ![Step 1](./images/hubs.png)
 
 ## Step 2: List all projects
 
-Use the `HubId` from step 1 to list all projects and take note of the projectId (`id`). [See NodeJs code](/services/aps/dx.js).
+Use the `hubId` from Step 1 and click `List Projects` to list all the projects within a Hub. Take note of the Project ID (`id`) for subsequent steps [See NodeJs code](/services/aps/dx.js).
 
 ![Step 2](./images/projects.png)
 
 
 ## Step 3: List Project Folders
 
-This step uses `hubId` and `projectId`. Click on List Project Folders. [See NodeJs code](/services/aps/dx.js).
+Use the `projectId` from Step 2 and click `List Project Folders` to list all the folders in a Project. Take note of the Folder ID (`id`) for subsequent steps [See NodeJs code](/services/aps/dx.js).
 
 ![Step 3](./images/projectFolders.png)
 
-***Note:*** In this request we show not only the main folders like *Project Files* and *For the Field*,
-but also the sub-folders.
-
-
 ## Step 4: List Folder Content
 
-This step uses `hubId`, `projectId` and the `folderId`. Click on List Folders Content. [See NodeJs code](/services/aps/dx.js).
-
-***Note:*** In case there are sub-folders needed to be explored,
-put the sub-folder urn into same filed and rerun again this step
+Use the `folderId` from Step 3 and click `List Folder Content` to list a folder and exchanges within a Project. Take note of the Exchange ID (`id`) for subsequent steps [See NodeJs code](/services/aps/dx.js).
 
 ![Step 4](./images/folderContent.png)
 
-***Note:*** For the next step, we are interested in items of type `"items:autodesk.bim360:FDX"`.
+***Note:*** For the next step, we are interested only in exchangeId.
 
 
 ## Step 5: Get Exchange information
 
-This step uses only the `exchangeFileUrn` received from the previous results. Click on Get Exchange Information. [See NodeJs code](/services/aps/dx.js).
+Use the `exchangeId` from Step 4 and click `Get Exchange Information` to list the properties of a Data Exchange [See NodeJs code](/services/aps/dx.js).
 
 ![Step 5](./images/exchangeInfo2.png)
 
 ## Step 6: Generate quantity takeoff
 
-Use the `exchangeId` from step 5. Click on generate schedule. You may adjust he `Category` field. [See NodeJs code](/services/aps/dx.js) 
+Use the `exchangeId`. Click on `Generate schedule`. You may adjust the `Category` field to get the filtered list of elements and their properties [See NodeJs code](/services/aps/dx.js) 
 
 ![Step 6](./images/schedule.png)
 
@@ -55,32 +48,32 @@ Query used:
 
 ```
 {
-    designEntities(
-            filter: {
-                exchangeId: "${exchangeId}", 
-                classificationFilter: {category: "${category}"}}
-            ) {
-               results {
-                 id
-                 name
-                 classification {
-                   category
-                 }
-                  properties (filter: {name:"Volume" }){
-                    results {
-                        name
-                        displayValue
-                        value
-                        propertyDefinition {
-                           description
-                           specification
-                           type
-                           units
-                        }
-                    }
-                  }
-               }
+      exchange(exchangeId: "${exchangeId}") {
+        id
+        name
+        version {
+          versionNumber
+        }
+        elements(filter: {query: "property.name.category=='${category}'"}) {
+          results {
+            id
+            name
+            properties(filter: {names: ["Volume", "category"]}) {
+              results {
+                name
+                value
+                propertyDefinition {
+                  description
+                  specification
+                  id
+                  units
+                  valueType
+                }
+              }
             }
- }
+          }
+        }
+      }
+    }
 ```
-***Note:*** For now, the only filter available is [the name of the property](https://forge.autodesk.com/en/docs/fdxgraph/v1/reference/inputs/propertyfilterinput/), as in above query is the "Volume".
+***Note:*** In property filter, it takes a list of filter that are only in the response.

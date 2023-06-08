@@ -7,13 +7,13 @@
 
 ## Description
 
-This sample demonstrates some basic GraphQL queries for Data Exchange, implementing following workflows:
+The following samples showcase some fundamental GraphQL queries for Data Exchange, which are used to implement the following workflows:
 
-- [Get exchange item information](./ExchangeItemInfo.md)
-- [Quantity takeoff](./QuantityTakeOff.md)
-- [Schedule](./Schedule.md)
+- [Retrieving the Exchange Item info](./ExchangeItemInfo.md)
+- [Quantity takeoff for Doors Sample Workflow](./QuantityTakeOff.md)
+- [Window Schedule Sample Workflow](./Schedule.md)
 
-![thumbnail](./thumbnail.png)
+![thumbnail](./images/exchangeInfo1.png)
 
 ## Setup
 
@@ -61,4 +61,5 @@ Please see the [LICENSE](LICENSE) file for more details.
 
 ## Written by
 
-Denis Grigor, Developer Advocate
+- Denis Grigor, Developer Advocate
+- Suraj Kumar, Software Developer 

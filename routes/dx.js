@@ -1,7 +1,11 @@
 const express = require('express');
 const {authRefreshMiddleware} = require('../services/aps/auth.js');
-const {getHubs, getProjects,
-    getFolders, getFolderContent,
+const {
+    getHubs,
+    getProjects,
+    getFolders, 
+    getFolderContent,
+    getExchangeInfoById,
     getExchangeInfo,
     getDataByCategory,
     getVolumeDataByCategory
@@ -50,6 +54,14 @@ router.get('/hubs/:hub_id/projects/:project_id/folders/:folder_id', async functi
     }
 });
 
+router.get('/exchange/id/:exchange_id_info', async function (req, res, next) {
+    try {
+        const result = await getExchangeInfoById(req.params.exchange_id_info, req.internalOAuthToken);
+        res.json(result);
+    } catch (error) {
+        next(error);
+    }
+});
 
 router.get('/exchange/:exchange_file_urn', async function (req, res, next) {
     try {

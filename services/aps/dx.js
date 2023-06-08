@@ -1,6 +1,6 @@
 var axios = require('axios');
 
-const BASE_URL = 'https://developer.api.autodesk.com/dataexchange/2022-11/graphql';
+const BASE_URL = 'https://developer.api.autodesk.com/dataexchange/2023-05/graphql';
 
 
 async function APS_GraphQL(token, query) {
@@ -50,152 +50,207 @@ async function getProjects(hubId, token) {
 
 
 async function getFolders(hubId, projectId, token) {
-    const query = ` {
-            project(
-                        hubId: "${hubId}"
-                        projectId: "${projectId}"
-                ) {
+    const query = `
+    {
+      project(projectId: "${projectId}") {
+        id
+        name
+        folders {
+          results {
+            id
+            name
+            __typename
+    
+            folders {
+                results {
                     id
                     name
-                    folders {
-                        results {
-                            id
-                            name
-                            items {
-                                results {
-                                    id
-                                    name
-                                    __typename
-                                    ... on BasicFile {
-                                            name
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    __typename
+                }
             }
-      `;
+            exchanges {
+                results {
+                    id
+                    name
+                    __typename
+                }
+            }
+          }
+        }
+      }
+    }
+  `;
     return APS_GraphQL(token, query);
 }
 
 async function getFolderContent(hubId, projectId, folderId, token) {
-    const query = ` {
-                items(
-                  projectId: "${projectId}"
-                  itemId: "${folderId}"
-                  hubId: "${hubId}"
-                ) {
-                  results {
-                    id
-                    name
-                    extensionType
-                   }
-                 }
-           }
-      `;
+    const query = `
+    {
+      folder(folderId: "${folderId}") {
+        id
+        name
+        folders {
+          results {
+            id
+            name
+            __typename
+          }
+        }
+        exchanges {
+          results {
+            id
+            name
+            alternativeRepresentations {
+              fileUrn
+              fileVersionUrn
+            }
+            __typename
+          }
+        }
+      }
+    }
+  `;
 
     return APS_GraphQL(token, query);
 }
 
+async function getExchangeInfoById(exchangeId, token) {
+
+  const query = `
+  {
+    exchange(exchangeId: "${exchangeId}") {
+      id
+      name
+      version {
+        versionNumber
+      }
+      alternativeRepresentations {
+        fileUrn
+        fileVersionUrn
+      }
+      lineage {
+        versions {
+          results {
+            id
+            versionNumber
+            createdOn
+          }
+        }
+        tipVersion {
+          versionNumber
+        }
+      }
+      properties {
+        results {
+          name
+          value
+        }
+      }
+    }
+  }  
+  `;
+  return APS_GraphQL(token, query);
+}
 
 async function getExchangeInfo(exchangeFileUrn, token) {
-    const query = ` {
-                exchanges(filter: { exchangeFile: "${exchangeFileUrn}" }) {
-                  results {
-                    id
-                    name
-                    versions{
-                        results{
-                            id
-                            createdOn
-                        }
-                    }
-                    propertyGroups {
-                            results {
-                                name
-                                id
-                                properties{
-                                    results{
-                                        name
-                                        value
-                                    }
-                                }
-                            }
-                    }
-                    
-                }
-              }
+    const query = `
+    {
+      exchangeByFileId(exchangeFileId: "${exchangeFileUrn}") {
+        id
+        name
+        version {
+          versionNumber
         }
-      `;
+        lineage {
+          versions {
+            results {
+              id
+              versionNumber
+              createdOn
+            }
+          }
+          tipVersion {
+            versionNumber
+          }
+        }
+        properties {
+          results {
+            name
+            value
+          }
+        }
+      }
+    }
+  `;
 
     return APS_GraphQL(token, query);
 }
 
 async function getDataByCategory(exchangeId, category, token) {
-    const query = ` {
-            designEntities(
-                    filter: {
-                        exchangeId: "${exchangeId}", 
-                        classificationFilter: {category: "${category}"}}
-            ) {
-               results {
-                 id
-                 name
-                 classification {
-                   category
-                 }
-                  properties{
-                    results {
-                        name
-                        displayValue
-                        value
-                    propertyDefinition {
-                       description
-                       specification
-                       type
-                       units
-                       }
-                     }
-                   }
-                 }
-               }
- }
-      `;
+    const query = `
+    {
+      exchange(exchangeId: "${exchangeId}") {
+        id
+        name
+        version {
+          versionNumber
+        }
+        elements(filter: {query: "property.name.category=='${category}'"}) {
+          results {
+            id
+            name
+            properties {
+              results {
+                name
+                value
+                propertyDefinition {
+                  description
+                  specification
+                  valueType
+                  units
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
 
     return APS_GraphQL(token, query);
 }
 
 async function getVolumeDataByCategory(exchangeId, category, token) {
-    const query = ` {
-            designEntities(
-                    filter: {
-                        exchangeId: "${exchangeId}", 
-                        classificationFilter: {category: "${category}"}}
-            ) {
-               results {
-                 id
-                 name
-                 classification {
-                   category
-                 }
-                  properties (filter: {name:"Volume" }){
-                    results {
-                        name
-                        displayValue
-                        value
-                    propertyDefinition {
-                       description
-                       specification
-                       type
-                       units
-                       }
-                     }
-                   }
-                 }
-               }
- }
-      `;
+    const query = `
+    {
+      exchange(exchangeId: "${exchangeId}") {
+        id
+        name
+        version {
+          versionNumber
+        }
+        elements(filter: {query: "property.name.category=='${category}'"}) {
+          results {
+            id
+            name
+            properties(filter: {names: ["Volume", "category"]}) {
+              results {
+                name
+                value
+                propertyDefinition {
+                  description
+                  specification
+                  id
+                  units
+                  valueType
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
 
     return APS_GraphQL(token, query);
 }
@@ -205,6 +260,7 @@ module.exports = {
     getProjects,
     getFolders,
     getFolderContent,
+    getExchangeInfoById,
     getExchangeInfo,
     getDataByCategory,
     getVolumeDataByCategory

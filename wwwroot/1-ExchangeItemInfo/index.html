@@ -14,7 +14,7 @@
 <body>
     <div id="header">
         <img class="logo" src="https://cdn.autodesk.io/logo/black/stacked.png" alt="Autodesk Platform Services">
-        <span class="title">Data Exchange Explorer Sample - Get exchange item information Sample Workflow</span>
+        <span class="title">Data Exchange Explorer Sample Workflow - Get exchange information</span>
         <button id="login" style="visibility: hidden;">Login</button>
     </div>
     <div id="sidebar">
@@ -36,7 +36,7 @@
             Step 3: List Project Folders
             <div class="mb-3">
                 <input type="text" class="form-control" id="projectId"
-                       placeholder="ProjectId - e.g. b.f609fbf7-7959-4832-a379-84028c470d0c">
+                       placeholder="ProjectId - e.g. cHJvan5iLjVjMDdjODRjLWJiZDktNDc2ZS04NzEyLTU0N2Y3NGM1Yjc2Yn5iLmM4ZDNjZjJjLTRiMzEtNDhiYS05NDU0LTA2NjQ1OTI5ODc2Yw">
             </div>
             <button type="button" class="btn btn-primary" id="getFolders">List Project Folders</button>
         </div>
@@ -45,13 +45,24 @@
             Step 4: List Folder content
             <div class="mb-3">
                 <input type="text" class="form-control" id="folderId"
-                    placeholder="Folder URN - e.g. urn:adsk.wipprod:fs.folder:co.M9eB2-g4TgWGKrpbdTCOug">
+                    placeholder="FolderId - e.g. Zm9sZH5iLjVjMDdjODRjLWJiZDktNDc2ZS04NzEyLTU0N2Y3NGM1Yjc2Yn5iLmM4ZDNjZjJjLTRiMzEtNDhiYS05NDU0LTA2NjQ1OTI5ODc2Y351cm46YWRzay53aXBzdGc6ZnMuZm9sZGVyOmNvLlFUUlJZV20tUWRPdzZqcVZLT1Z3UUE">
             </div>
             <button type="button" class="btn btn-primary" id="getFolderContent">List Folder content</button>
         </div>
         <hr />
+
         <div>
-            Step 4: Get Exchange information
+            Step 5a: Get Exchange info by ID
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exchangeIdInfo"
+                       placeholder="ExchangeId - e.g. 18f22e98-241c-332b-a610-8c66f87bcd97">
+            </div>
+            <button type="button" class="btn btn-primary" id="getExchangebyExchangeId">Get Exchange information</button>
+        </div>
+        <hr/>
+
+        <div>
+            Step 5b: Get Exchange info by exchangeFileUrn
             <div class="mb-3">
                 <input type="text" class="form-control" id="exchangeFileUrn"
                        placeholder="Exchange file urn - e.g. urn:adsk.wipprod:dm.lineage:LpTz5ZHTTxm9wT9qBlUcfg">

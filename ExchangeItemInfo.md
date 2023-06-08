@@ -1,9 +1,6 @@
 ## Retrieving the Exchange Item info
 
-Before exploring the exchanged data, it is required to get the exchange id, which can be retrieved
-from the exchange item located in ACC. <br/>
-This code sample focuses on the part of the Data Exchange GraphQL API, needed to navigate through hubs, projects,
-folders and identifying the exchange item.
+In order to explore the data of a Data Exchange, it is necessary to obtain the exchange ID, which can be retrieved from the exchange item located in ACC. The following code sample focuses on the specific part of the Data Exchange GraphQL API that is needed to navigate through hubs, projects, and folders, and identify the exchange item:
 
 To run the sample, please review [setup](./README.md#SETUP) instructions.
 
@@ -28,7 +25,7 @@ Query used:
 
 ## Step 2: List all projects
 
-Use the `HubId` from step 1 to list all projects and take note of the projectId (`id`). [See NodeJs code](/services/aps/dx.js).
+Use the `hubId` from Step 1 and click `List Projects` to list all the projects within a Hub. Take note of the Project ID (`id`) for subsequent steps [See NodeJs code](/services/aps/dx.js).
 
 ![Step 2](./images/projects.png)
 
@@ -47,97 +44,158 @@ Query used:
 
 ## Step 3: List Project Folders
 
-This step uses `hubId` and `projectId`. Click on List Project Folders. [See NodeJs code](/services/aps/dx.js).
+Use the `projectId` from Step 2 and click `List Project Folders` to list all the folders in a Project. Take note of the Folder ID (`id`) for subsequent steps [See NodeJs code](/services/aps/dx.js).
 
 ![Step 3](./images/projectFolders.png)
 
 Query used:
 
 ```
-{
-    project( hubId: "b.768ca****4e48" projectId: "b.d7617***5b7e97") {
+    {
+      project(projectId: "${projectId}") {
+        id
+        name
+        folders {
+          results {
             id
             name
+            __typename
+    
             folders {
                 results {
                     id
                     name
-                    items {
-                        results {
-                            id
-                            name
-                            __typename
-                            ... on BasicFile {
-                                    name
-                            }
-                        }
-                    }
+                    __typename
                 }
             }
+            exchanges {
+                results {
+                    id
+                    name
+                    __typename
+                }
+            }
+          }
+        }
+      }
     }
-}
-``` 
+```
 
-***Note:*** In this request we show not only the main folders like *Project Files* and *For the Field*, 
-but also the sub-folders.
+***Note:*** In this request response contains the folders and exchanges within a project.
 
 
 ## Step 4: List Folder Content
 
-This step uses `hubId`, `projectId` and the `folderId`. Click on List Folders Content. [See NodeJs code](/services/aps/dx.js).
+Use the `folderId` from Step 3 and click `List Folder Content` to list a folder and exchanges within a Project. Take note of the Exchange ID (`id`) for subsequent steps [See NodeJs code](/services/aps/dx.js).
 
-***Note:*** In case there are sub-folders needed to be explored, 
-put the sub-folder urn into same filed and rerun again this step  
+***Note:*** This query returns the folders and exchanges within the folder.
 
 ![Step 4](./images/folderContent.png)
 
 Query used:
 
 ```
-{
-    items(
-        hubId: "b.768ca****4e48" 
-        projectId: "b.d7617***5b7e97"
-        itemId: "urn:adsk.wipprod:fs.folder:co.ASTmHF***qzg"
-      
-    ) {
-      results {
+    {
+      folder(folderId: "${folderId}") {
         id
         name
-        extensionType
-       }
-     }
-}
+        folders {
+          results {
+            id
+            name
+            __typename
+          }
+        }
+        exchanges {
+          results {
+            id
+            name
+            alternativeRepresentations {
+              fileUrn
+              fileVersionUrn
+            }
+            __typename
+          }
+        }
+      }
+    }
 ``` 
 
-***Note:*** For the next step, we are interested in items of type `"items:autodesk.bim360:FDX"`.
+## Step 5a: Get Exchange information
 
+Use the `exchangeId` from Step 4 and click `Get Exchange Information` to list the properties of a Data Exchange [See NodeJs code](/services/aps/dx.js).
 
-## Step 5: Get Exchange information
-
-This step uses only the `exchangeFileUrn` received from the previous results. Click on Get Exchange Information. [See NodeJs code](/services/aps/dx.js).
-
-![Step 5](./images/exchangeInfo.png)
+![Step 5a](./images/exchangeInfo.png)
 
 Query used:
 
 ```
-{
-    exchanges(filter: { exchangeFile: "urn:adsk.wipprod:dm.lineage:8nq***oQ" }) {
-      results {
+  {
+    exchange(exchangeId: "${exchangeId}") {
+      id
+      name
+      version {
+        versionNumber
+      }
+      alternativeRepresentations {
+        fileUrn
+        fileVersionUrn
+      }
+      lineage {
+        versions {
+          results {
             id
-            name
-            versions{
-                results{
-                    id
-                    createdOn
-                }
-            }
-            
-            
+            versionNumber
+            createdOn
+          }
+        }
+        tipVersion {
+          versionNumber
+        }
+      }
+      properties {
+        results {
+          name
+          value
+        }
       }
     }
-}
+  }
 ``` 
 
-***Note:*** Once the id of the exchange is identified, all subsequent calls to explore the exchanged data through Data Exchange GraphQL, will require the above exchange id.
+## Step 5b: Get Exchange information by exchangeFileUrn
+Alternatively, use the exchange `fileUrn` from Step 4 and click `Get Exchange Information` to list the properties of a Data Exchange
+
+![Step 5a](./images/exchangeInfo.png)
+
+```
+    {
+      exchangeByFileId(exchangeFileId: "${exchangeFileUrn}") {
+        id
+        name
+        version {
+          versionNumber
+        }
+        lineage {
+          versions {
+            results {
+              id
+              versionNumber
+              createdOn
+            }
+          }
+          tipVersion {
+            versionNumber
+          }
+        }
+        properties {
+          results {
+            name
+            value
+          }
+        }
+      }
+    }
+```
+
+> **Note**: Once exchangeId is retrived from above steps, we will use this exchangeId for the further process.
