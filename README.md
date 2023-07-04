@@ -40,6 +40,7 @@ Mac OSX/Linux (Terminal)
     export APS_CLIENT_ID=<<YOUR CLIENT ID FROM DEVELOPER PORTAL>>
     export APS_CLIENT_SECRET=<<YOUR CLIENT SECRET>>
     export APS_CALLBACK_URL=http://localhost:8080/api/auth/callback
+    export SERVER_SESSION_SECRET=<<PUT HERE SOMETHING RANDOM>>
     npm start
 
 Windows
@@ -48,6 +49,7 @@ Windows
     set APS_CLIENT_ID =<<YOUR CLIENT ID FROM DEVELOPER PORTAL>>
     set APS_CLIENT_SECRET =<<YOUR CLIENT SECRET>>
     set APS_CALLBACK_URL=http://localhost:8080/api/auth/callback
+    set SERVER_SESSION_SECRET=<<PUT HERE SOMETHING RANDOM>>
     npm start
 
 ## Troubleshooting
