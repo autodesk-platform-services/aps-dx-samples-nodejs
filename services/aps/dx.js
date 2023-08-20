@@ -140,10 +140,11 @@ async function getExchangeInfoById(exchangeId, token) {
           versionNumber
         }
       }
-      properties {
-        results {
-          name
-          value
+      propertyDefinitions {
+          results {
+              id
+              name
+              specification
         }
       }
     }
@@ -173,12 +174,13 @@ async function getExchangeInfo(exchangeFileUrn, token) {
             versionNumber
           }
         }
-        properties {
+        propertyDefinitions {
           results {
-            name
-            value
+              id
+              name
+              specification
           }
-        }
+       }
       }
     }
   `;
@@ -206,7 +208,6 @@ async function getDataByCategory(exchangeId, category, token) {
                 propertyDefinition {
                   description
                   specification
-                  valueType
                   units
                 }
               }
@@ -242,7 +243,6 @@ async function getVolumeDataByCategory(exchangeId, category, token) {
                   specification
                   id
                   units
-                  valueType
                 }
               }
             }
