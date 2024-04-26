@@ -1,16 +1,22 @@
-const { AuthClientThreeLegged, UserProfileApi } = require('forge-apis');
-const { APS_CLIENT_ID, APS_CLIENT_SECRET, APS_CALLBACK_URL: APS_CALLBACK_URL, INTERNAL_TOKEN_SCOPES, PUBLIC_TOKEN_SCOPES } = require('../../config.js');
+const { SdkManagerBuilder } = require('@aps_sdk/autodesk-sdkmanager');
+const { AuthenticationClient, ResponseType, Scopes } = require('@aps_sdk/authentication');
+const { APS_CLIENT_ID, APS_CLIENT_SECRET, APS_CALLBACK_URL } = require('../../config.js');
 
-const internalAuthClient = new AuthClientThreeLegged(APS_CLIENT_ID, APS_CLIENT_SECRET, APS_CALLBACK_URL, INTERNAL_TOKEN_SCOPES);
-const publicAuthClient = new AuthClientThreeLegged(APS_CLIENT_ID, APS_CLIENT_SECRET, APS_CALLBACK_URL, PUBLIC_TOKEN_SCOPES);
+const sdkManager = SdkManagerBuilder.create().build();
+const authenticationClient = new AuthenticationClient(sdkManager);
 
 function getAuthorizationUrl() {
-    return internalAuthClient.generateAuthUrl();
+    return authenticationClient.authorize(APS_CLIENT_ID, ResponseType.Code, APS_CALLBACK_URL, [Scopes.DataRead, Scopes.ViewablesRead]);
 }
 
 async function authCallbackMiddleware(req, res, next) {
-    const internalCredentials = await internalAuthClient.getToken(req.query.code);
-    const publicCredentials = await publicAuthClient.refreshToken(internalCredentials);
+    const internalCredentials = await authenticationClient.getThreeLeggedToken(APS_CLIENT_ID, req.query.code, APS_CALLBACK_URL, {
+        clientSecret: APS_CLIENT_SECRET
+    });
+    const publicCredentials = await authenticationClient.getRefreshToken(APS_CLIENT_ID, internalCredentials.refresh_token, {
+        clientSecret: APS_CLIENT_SECRET,
+        scopes: [Scopes.ViewablesRead]
+    });
     req.session.public_token = publicCredentials.access_token;
     req.session.internal_token = internalCredentials.access_token;
     req.session.refresh_token = publicCredentials.refresh_token;
@@ -26,8 +32,14 @@ async function authRefreshMiddleware(req, res, next) {
     }
 
     if (expires_at < Date.now()) {
-        const internalCredentials = await internalAuthClient.refreshToken({ refresh_token });
-        const publicCredentials = await publicAuthClient.refreshToken(internalCredentials);
+        const internalCredentials = await authenticationClient.getRefreshToken(APS_CLIENT_ID, refresh_token, {
+            clientSecret: APS_CLIENT_SECRET,
+            scopes: [Scopes.DataRead, Scopes.ViewablesRead]
+        });
+        const publicCredentials = await authenticationClient.getRefreshToken(APS_CLIENT_ID, internalCredentials.refresh_token, {
+            clientSecret: APS_CLIENT_SECRET,
+            scopes: [Scopes.ViewablesRead]
+        });
         req.session.public_token = publicCredentials.access_token;
         req.session.internal_token = internalCredentials.access_token;
         req.session.refresh_token = publicCredentials.refresh_token;
@@ -35,22 +47,21 @@ async function authRefreshMiddleware(req, res, next) {
     }
     req.internalOAuthToken = {
         access_token: req.session.internal_token,
-        expires_in: Math.round((req.session.expires_at - Date.now()) / 1000)
+        expires_in: Math.round((req.session.expires_at - Date.now()) / 1000),
     };
     req.publicOAuthToken = {
         access_token: req.session.public_token,
-        expires_in: Math.round((req.session.expires_at - Date.now()) / 1000)
+        expires_in: Math.round((req.session.expires_at - Date.now()) / 1000),
     };
     next();
 }
 
-async function getUserProfile(token) {
-    const resp = await new UserProfileApi().getUserProfile(internalAuthClient, token);
-    return resp.body;
+async function getUserProfile(credentials) {
+    const resp = await authenticationClient.getUserInfo(credentials.access_token);
+    return resp;
 }
 
 module.exports = {
-    internalAuthClient,
     getAuthorizationUrl,
     authCallbackMiddleware,
     authRefreshMiddleware,

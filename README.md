@@ -19,8 +19,8 @@ The following samples showcase some fundamental GraphQL queries for Data Exchang
 
 ### Prerequisites
 
-- [APS credentials](https://forge.autodesk.com/en/docs/oauth/v2/tutorials/create-app) (use `http://localhost:8080/api/auth/callback` as callback URL, take note of you Client ID and Client Secret)
-- Provisioned access to [ACC Account](https://forge.autodesk.com/en/docs/bim360/v1/tutorials/getting-started/manage-access-to-docs/) (use Client Id from above)
+- [APS credentials](https://aps.autodesk.com/en/docs/oauth/v2/tutorials/create-app) (use `http://localhost:8080/api/auth/callback` as callback URL, take note of you Client ID and Client Secret)
+- Provisioned access to [ACC Account](https://aps.autodesk.com/en/docs/bim360/v1/tutorials/getting-started/manage-access-to-docs/) (use Client Id from above)
 - [Node.js](https://nodejs.org) (we recommend the Long Term Support version)
 - Terminal (for example, [Windows Command Prompt](https://en.wikipedia.org/wiki/Cmd.exe)
 or [macOS Terminal](https://support.apple.com/guide/terminal/welcome/mac))
@@ -54,7 +54,7 @@ Windows
 
 ## Troubleshooting
 
-General [APS Support form](https://forge.autodesk.com/en/support/get-help).
+General [APS Support form](https://aps.autodesk.com/en/support/get-help).
 
 ## License
 
