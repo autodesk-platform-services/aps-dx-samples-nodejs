@@ -30,7 +30,8 @@ body, html {
 
 #preview {
     width: 75%;
-    right: 0;
+    right: -10px;
+    /*left: 10px;*/
     top: 3em;
     bottom: 0;
     overflow-y: scroll;

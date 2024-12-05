@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="https://cdn.autodesk.io/favicon.ico">
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/main.css">
+    <title> Data Exchange GraphQL (BETA) - Autodesk Platform Services</title>
+</head>
+
+<body>
+    <div id="header">
+        <img class="logo" src="https://cdn.autodesk.io/logo/black/stacked.png" alt="Autodesk Platform Services">
+        <span class="title">Data Exchange Explorer Sample Workflow - Create Exchange</span>
+        <button id="login" style="visibility: hidden;">Login</button>
+    </div>
+    <div id="sidebar">
+        <div>
+            Step 1: List hubs on your account<br />
+            <button type="button" class="btn btn-primary" id="getHubs">List Hubs</button>
+        </div>
+        <hr />
+        <div>
+            Step 2: List project for a hub
+            <div class="mb-3">
+                <input type="text" class="form-control" id="hubId"
+                       placeholder="HubId - e.g. b.768cae14-76b3-4531-9030-25212dab4e48">
+            </div>
+            <button type="button" class="btn btn-primary" id="getProjects">List Projects</button>
+        </div>
+        <hr />
+        <div>
+            Step 3: List Project Folders
+            <div class="mb-3">
+                <input type="text" class="form-control" id="projectId"
+                       placeholder="ProjectId - e.g. b.f609fbf7-7959-4832-a379-84028c470d0c">
+            </div>
+            <button type="button" class="btn btn-primary" id="getFolders">List Project Folders</button>
+        </div>
+        <hr />
+        <div>
+            Step 4: List Folder content
+            <div class="mb-3">
+                <input type="text" class="form-control" id="folderId"
+                       placeholder="FolderId - e.g. Zm9sZH5iLjVjMDdjODRjLWJiZDktNDc2ZS04NzEyLTU0N2Y3NGM1Yjc2Yn5iLmM4ZDNjZjJjLTRiMzEtNDhiYS05NDU0LTA2NjQ1OTI5ODc2Y351cm46YWRzay53aXBzdGc6ZnMuZm9sZGVyOmNvLlFUUlJZV20tUWRPdzZqcVZLT1Z3UUE">
+            </div>
+            <button type="button" class="btn btn-primary" id="getFolderContent">List Folder content</button>
+        </div>
+        <hr />
+        <div>
+            Step 5: Create Exchange by providing item id, view name and destination folder id
+            <div class="mb-3">
+                <input type="text" class="form-control" id="itemId"
+                    placeholder="Item id - e.g. aXRlbX5iLjc2OGNhZTE0LTc2YjMtNDUzMS05MDMwLTI1MjEyZGFiNGU0OH5iLmUzYmU4Yzg3LTFkZjUtNDcwZi05MjE0LTFiNmNjODU0NTJmYX51cm46YWRzay53aXBwcm9kOmZzLmZvbGRlcjpjby5fVVZQODJqc1N3RzVvLVIxaWd6SzR3fnVybjphZHNrLndpcHByb2Q6ZG0ubGluZWFnZTo4Y2lNRWMteVNMcWtON0xtSnNmVTBB">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="viewName" placeholder="View name - e.g. Windows">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="folderDestinationId" placeholder="Folder id - e.g. Zm9sZH5iLjc2OGNhZTE0LTc2YjMtNDUzMS05MDMwLTI1MjEyZGFiNGU0OH5iLmUzYmU4Yzg3LTFkZjUtNDcwZi05MjE0LTFiNmNjODU0NTJmYX51cm46YWRzay53aXBwcm9kOmZzLmZvbGRlcjpjby5fVVZQODJqc1N3RzVvLVIxaWd6SzR3">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exchangeName" placeholder="How you want to name it - e.g. my_exchange">
+            </div>
+            <button type="button" class="btn btn-primary" id="createExchange">Create Exchange</button>
+        </div>
+        <hr />
+        <div>
+            Step 6: Check the status of created exchange by providing its id
+            <div class="mb-3">
+                <input type="text" class="form-control" id="new_exchange_id"
+                       placeholder="Exchange id - e.g. ZXhjfmNvLmNCTVotNVFoVHltMmMtbmZhMUZ4MlF">
+            </div>
+            <button type="button" class="btn btn-primary" id="checkExchange">Check Exchange Status</button>
+        </div>
+        <hr />
+        &lt;&lt; <a href="/">Back to all samples</a>
+    </div>
+    <div id="preview">
+        <pre><code id="jsonresult"></code></pre>
+    </div>
+    <script src="/graphql.js" type="module"></script>
+    <script src="/main.js" type="module"></script>
+</body>
+
+</html>

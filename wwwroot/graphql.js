@@ -76,6 +76,28 @@ registerOnClick('getSchedule', async () => {
     writeResponse(designEntities)
 });
 
+// Sample 4 Create Exchange
+registerOnClick('createExchange', async () => {
+    let itemId = document.getElementById('itemId').value;
+    let viewName = document.getElementById('viewName').value;
+    let folderId = document.getElementById('folderDestinationId').value;
+    let exchangeName = document.getElementById('exchangeName').value;
+    if (itemId === '') { writeResponse('Please provide the itemId'); return; }
+    if (viewName === '') { writeResponse('Please provide the viewName'); return; }
+    if (folderId === '') { writeResponse('Please provide the destination folder id'); return; }
+    if (exchangeName === '') { writeResponse('Please provide the destination folder id'); return; }
+    let newExchange = await query('/api/graphql/item/' + itemId + '/view/' + viewName + '/destination/' + folderId+ '/exchange/' + exchangeName);
+    writeResponse(newExchange)
+});
+
+// Sample 4 Check Exchange Status
+registerOnClick('checkExchange', async () => {
+    let exchangeId = document.getElementById('new_exchange_id').value;
+    if (exchangeId === '') { writeResponse('Please provide the exchangeId'); return; }
+    let exchangeData = await query('/api/graphql/exchange/' + exchangeId + '/status');
+    writeResponse(exchangeData)
+});
+
 async function query(url) {
     writeResponse('Processing...');
     const resp = await fetch(url);

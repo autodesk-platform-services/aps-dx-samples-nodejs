@@ -4,3 +4,7 @@ node_modules
 .vscode
 .DS_Store
 Thumbs.db
+.idea/.gitignore
+.idea/aps-dx-samples-nodejs.iml
+.idea/modules.xml
+.idea/vcs.xml

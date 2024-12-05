@@ -18,6 +18,26 @@ async function APS_GraphQL(token, query) {
         });
 }
 
+async function APS_GraphQLMutation(token, mutation) {
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://developer.api.autodesk.com/dataexchange/2023-05/graphql',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token.access_token,
+        },
+        data : mutation
+    };
+
+
+
+    return axios.request(config)
+        .then(result => {
+            return result.data.data ? result.data.data : "Error: make sure that you provided right input data (e.g. urn of the FDX item and not of a Revit file)"
+        });
+}
+
 async function getHubs(token) {
 
     const query = `
@@ -107,6 +127,12 @@ async function getFolderContent(hubId, projectId, folderId, token) {
             __typename
           }
         }
+        items {
+            results{
+                id
+                name
+            }
+        }
       }
     }
   `;
@@ -116,7 +142,7 @@ async function getFolderContent(hubId, projectId, folderId, token) {
 
 async function getExchangeInfoById(exchangeId, token) {
 
-  const query = `
+    const query = `
   {
     exchange(exchangeId: "${exchangeId}") {
       id
@@ -150,7 +176,7 @@ async function getExchangeInfoById(exchangeId, token) {
     }
   }  
   `;
-  return APS_GraphQL(token, query);
+    return APS_GraphQL(token, query);
 }
 
 async function getExchangeInfo(exchangeFileUrn, token) {
@@ -255,6 +281,79 @@ async function getVolumeDataByCategory(exchangeId, category, token) {
     return APS_GraphQL(token, query);
 }
 
+async function createDataExchangeForRevit(revit_file_id, view_name, folder_id, exchange_name, token) {
+  //   const mutation = `
+  //   {
+  //         createExchange(
+  //           input: {
+  //               viewName: "${view_name}"
+  //               source: {
+  //                   fileId: "${revit_file_id}"
+  //               }
+  //               target: {
+  //                   name: "${exchange_name}"
+  //                   folderId: "${folder_id}"
+  //               }
+  //           }
+  //         ) {
+  //               exchange {
+  //                   id
+  //                   name
+  //               }
+  //           }
+  //   }
+  // `;
+
+
+    const data = JSON.stringify({
+        query: `mutation CreateExchangeFromRevit {
+                        createExchange(
+                            input: {
+                                viewName: "${view_name}",
+                                source: {
+                                    fileId: "${revit_file_id}"
+                                }
+                                target: {
+                                    name: "${exchange_name}"
+                                    folderId: "${folder_id}"
+                                }
+                            }
+                        ) {
+                                exchange {
+                                    id
+                                    name
+                                }
+                            }
+        }`,
+        variables: {}
+    });
+
+
+    return APS_GraphQLMutation(token, data);
+}
+
+
+async function getStatusOfExchange(exchangeId,token) {
+    const query = `
+    {
+      getExchangeCreationStatus(exchangeId: "${exchangeId}") {
+                exchange{
+                   name
+                }
+                status
+                versionNumber
+                exchange{
+                    id
+                    name
+                }
+
+      }
+    }
+  `;
+
+    return APS_GraphQL(token, query);
+}
+
 module.exports = {
     getHubs,
     getProjects,
@@ -263,5 +362,7 @@ module.exports = {
     getExchangeInfoById,
     getExchangeInfo,
     getDataByCategory,
-    getVolumeDataByCategory
+    getVolumeDataByCategory,
+    createDataExchangeForRevit,
+    getStatusOfExchange
 };

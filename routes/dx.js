@@ -8,7 +8,9 @@ const {
     getExchangeInfoById,
     getExchangeInfo,
     getDataByCategory,
-    getVolumeDataByCategory
+    getVolumeDataByCategory,
+    createDataExchangeForRevit,
+    getStatusOfExchange
     } = require('../services/aps/dx.js');
 
 let router = express.Router();
@@ -84,6 +86,24 @@ router.get('/exchange/:exchange_id/takeoff/:category', async function (req, res,
 router.get('/exchange/:exchange_id/takeoff/:category/volumes', async function (req, res, next) {
     try {
         const properties = await getVolumeDataByCategory(req.params.exchange_id, req.params.category, req.internalOAuthToken);
+        res.json(properties);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/item/:item_id/view/:view_name/destination/:folder_id/exchange/:exchange_name', async function (req, res, next) {
+    try {
+        const result = await createDataExchangeForRevit(req.params.item_id, req.params.view_name, req.params.folder_id, req.params.exchange_name,req.internalOAuthToken);
+        res.json(result);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/exchange/:exchange_id/status', async function (req, res, next) {
+    try {
+        const properties = await getStatusOfExchange(req.params.exchange_id, req.internalOAuthToken);
         res.json(properties);
     } catch (err) {
         next(err);
