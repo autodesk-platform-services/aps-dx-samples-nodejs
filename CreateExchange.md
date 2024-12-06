@@ -1,4 +1,4 @@
-## Create Exchange Workflow
+## Exchange Creation Workflow
 
 To create an exchange from Revit file using Data Exchange GraphQL API, you would need:
 
