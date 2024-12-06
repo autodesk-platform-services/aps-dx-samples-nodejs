@@ -1,4 +1,4 @@
-## Retrieving the Exchange Item info
+## Retrieving the Exchange Item Information.
 
 In order to explore the data of a Data Exchange, it is necessary to obtain the exchange ID, which can be retrieved from the exchange item located in ACC. The following code sample focuses on the specific part of the Data Exchange GraphQL API that is needed to navigate through hubs, projects, and folders, and identify the exchange item:
 
