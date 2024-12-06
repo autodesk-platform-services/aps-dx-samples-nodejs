@@ -12,7 +12,7 @@ The following samples showcase some fundamental GraphQL queries for Data Exchang
 - [Retrieving the Exchange Item info](./ExchangeItemInfo.md)
 - [Quantity takeoff for Doors Sample Workflow](./QuantityTakeOff.md)
 - [Window Schedule Sample Workflow](./Schedule.md)
-- [Create Exchange](./CreateExchange.md)
+- [Exchange Creation Workflow](./CreateExchange.md)
 
 ![thumbnail](./images/exchangeInfo1.png)
 
